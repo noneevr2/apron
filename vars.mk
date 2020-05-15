@@ -62,8 +62,8 @@ endif
 OCAMLOPT_TARGETS0 = $(addsuffix .cmxa, $(1)) $(addsuffix .a, $(1))
 
 ifneq ($(HAS_SHARED),)
-  CC_APRON_DYLIB = $(CC) -shared
-  CXX_APRON_DYLIB = $(CXX) -shared
+  CC_APRON_DYLIB = $(CC) $(DLL_FLAG)
+  CXX_APRON_DYLIB = $(CXX) $(DLL_FLAG)
   ifneq ($(HAS_OCAML),)
     OCAMLMKLIB := $(OCAMLMKLIB) -dllpath $(APRON_LIB)
     OCAMLMKLIB := $(OCAMLMKLIB) -L$(APRON_LIB)
@@ -73,7 +73,7 @@ ifneq ($(HAS_SHARED),)
     CXX_APRON_DYLIB += -install_name $(APRON_LIB)/$@
   endif
   ifneq ($(HAS_NATIVE_PLUGINS),)
-    OCAMLOPT_CMXS = $(OCAMLOPT) $(OCAMLOPTFLAGS) -linkall -shared
+    OCAMLOPT_CMXS = $(OCAMLOPT) $(OCAMLOPTFLAGS) -linkall $(DLL_FLAG)
     OCAMLOPT_TARGETS = $(call OCAMLOPT_TARGETS0,$(1)) $(addsuffix .cmxs, $(1))
   else
     OCAMLOPT_TARGETS = $(call OCAMLOPT_TARGETS0,$(1))
